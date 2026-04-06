@@ -1,0 +1,40 @@
+openapi: 3.0.4
+info:
+  version: 0.0.1
+  title: Hello World API
+  summary: A trivial API
+  description: An API that allows for a client to retrieve a fixed string as a JSON object
+  license:
+    name: GNU Lesser General Public License v3.0
+    identifier: LGPL-3.0-only
+
+servers:
+  - url: http://apiserver:80
+
+paths:
+  /helloworld:
+    get:
+      summary: return the Hello World string as a JSON object
+      operationId: gethw
+      responses:
+        200:
+          description: The Hello World string
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: Error code
+        message:
+          type: string
+          description: Error message
