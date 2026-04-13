@@ -10,24 +10,24 @@ import (
 	"sync"
 )
 
-type Lession1 struct {
+type Env1 struct {
 	Something int64
 	Lock   sync.Mutex
 }
 
 // Make sure we conform to ServerInterface
 
-var _ ServerInterface = (*Lession1)(nil)
+var _ ServerInterface = (*Env1)(nil)
 
-func NewLession1() *Lession1 {
-	return &Lession1{
+func NewEnv1() *Env1 {
+	return &Env1{
 		Something:   1,
 	}
 }
 
-// sendLession1Error wraps sending of an error in the Error format, and
+// sendEnv1 wraps sending of an error in the Error format, and
 // handling the failure to marshal that.
-func sendLession1Error(w http.ResponseWriter, code int, message string) {
+func sendEnv1(w http.ResponseWriter, code int, message string) {
 	lession1Err := Error{
 		Code:    int32(code),
 		Message: message,
@@ -36,11 +36,16 @@ func sendLession1Error(w http.ResponseWriter, code int, message string) {
 	_ = json.NewEncoder(w).Encode(lession1Err)
 }
 
-// FindLesson1s implements all the handlers in the ServerInterface
-func (p *Lession1) Gethw(w http.ResponseWriter, r *http.Request) {
-	var result string
+// FindEnv1s implements all the handlers in the ServerInterface
+func (p *Env1) GetEnv(w http.ResponseWriter, r *http.Request) {
+	var temp string
+	var lux string
+	var result GetEnv200JSONResponse 
 
-	result = "Hello World"
+	temp = "Off Line"
+	lux = "very bright"
+	result.Temp = &temp
+	result.Lux = &lux
 
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(result)
