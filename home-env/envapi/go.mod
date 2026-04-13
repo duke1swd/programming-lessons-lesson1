@@ -1,4 +1,4 @@
-module swdaniel.net/swd/simpleapi
+module swdaniel.net/swd/envapi
 
 go 1.25.7
 

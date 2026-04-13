@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json
+package: api
+
+output: envapi/api/env.gen.go
+
+output-options:
+  skip-prune: true  # not sure why, but without this the 'Error' type is not created.
+
+generate:
+  strict-server: true
+  models: true
+  chi-server: true
+  embedded-spec: true
