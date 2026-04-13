@@ -31,7 +31,7 @@ func main() {
 	swagger.Servers = nil
 
 	// Create an instance of our handler which satisfies the generated interface
-	lesson1 := api.NewLession1()
+	lesson1 := api.NewEnv1()
 
 	// This is how you set up a basic chi router
 	r := chi.NewRouter()
