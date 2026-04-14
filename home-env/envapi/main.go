@@ -16,6 +16,17 @@ import (
 	"swdaniel.net/swd/envapi/api"
 )
 
+var (
+	string temp;
+	string lux;
+}
+
+func init() {
+	temp = "unknown";
+	lux = "unknown";
+}
+
+
 func main() {
 	port := flag.String("port", "8080", "Port for test HTTP server")
 	flag.Parse()

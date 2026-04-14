@@ -38,12 +38,8 @@ func sendEnv1(w http.ResponseWriter, code int, message string) {
 
 // FindEnv1s implements all the handlers in the ServerInterface
 func (p *Env1) GetEnv(w http.ResponseWriter, r *http.Request) {
-	var temp string
-	var lux string
 	var result GetEnv200JSONResponse 
 
-	temp = "Off Line"
-	lux = "very bright"
 	result.Temp = &temp
 	result.Lux = &lux
 

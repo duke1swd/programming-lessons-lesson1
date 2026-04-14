@@ -32,8 +32,8 @@ go.work.sum
 # .vscode/
 
 # my binary
-simpleapi
-envapi
+simpleapi/simpleapi
+envapi/envapi
 
 # my generated files
 *.gen.go
