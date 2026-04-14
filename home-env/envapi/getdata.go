@@ -7,6 +7,8 @@ package main
 import (
 	"time"
 	"strings"
+	"fmt"
+	"os"
 
 	"github.com/eclipse/paho.mqtt.golang"
 )
@@ -16,6 +18,7 @@ var (
 	string luxTopic
 	string mqttAddress
 	string mqttClientId
+	string mqttSubscription
 )
 
 var (
@@ -31,6 +34,7 @@ func init() {
 	luxTopic = "environment/outdoor-lux"
 	mqttAddress = "tcp://127.0.0.1:1883"
 	mqttClientId = "env-api-server"
+	mqttSubscription = "environment/#"
 }
 
 // This routine is called when we receive a message.
@@ -62,9 +66,14 @@ func getClient() {
 	c := mqtt.NewClient(opts)
 	c.SetOrderMatters(false)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
-		panic(token.Error())
+		fmt.Println(token.Error())
+		os.Exit(1)
 	}
 
-	subscriptionToken := c.Subscribe(mqttSubscription, 
+	if token := c.Subscribe(mqttSubscription, 0, nil); token.Wait() && token.Error() != nil {
+		fmt.Println(token.Error())
+		os.Exit(1)
+	}
+
 	mqttClient = c
 }
