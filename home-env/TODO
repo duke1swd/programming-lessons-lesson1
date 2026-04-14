@@ -1,0 +1,5 @@
+TODO
+* get the values directly from the sensor, not the "environment" stuff.
+* make all the mqtt stuff configurable through environment variables.
+* keep track of last update time of the variables, and refuse to give out stale data.
+* configure the mqtt connection to auto-reconnect
