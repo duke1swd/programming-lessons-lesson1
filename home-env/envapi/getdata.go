@@ -5,30 +5,36 @@
 package main
 
 import (
-	"time"
-	"strings"
 	"fmt"
 	"os"
+	"strings"
+	"time"
 
 	"github.com/eclipse/paho.mqtt.golang"
+	"swdaniel.net/swd/envapi/api"
 )
 
 var (
-	string tempTopic
-	string luxTopic
-	string mqttAddress
-	string mqttClientId
-	string mqttSubscription
+	temp string
+	lux string
 )
 
 var (
-	mqttClient          mqtt.Client
-	epoch               time.Time
-	timeoutContext      context.Context
-	timeoutChannel      chan int = make(chan int)
+	tempTopic        string
+	luxTopic         string
+	mqttAddress      string
+	mqttClientId     string
+	mqttSubscription string
+)
+
+var (
+	mqttClient mqtt.Client
+	epoch      time.Time
 )
 
 func init() {
+	temp = "unknown"
+	lux = "unknown"
 	epoch, _ = time.Parse("2006-Jan-02 MST", "2018-Nov-01 EDT")
 	tempTopic = "environment/outdoor-temp"
 	luxTopic = "environment/outdoor-lux"
@@ -50,11 +56,12 @@ var f1 mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 
 	switch payload {
 	case tempTopic:
-		temp = payload;
+		temp = payload
 	case luxTopic:
-		lux = payload;
+		lux = payload
 	default:
 	}
+	api.SetData(temp, lux)
 }
 
 func getClient() {
@@ -62,9 +69,9 @@ func getClient() {
 	opts.SetKeepAlive(60 * time.Second)
 	opts.SetDefaultPublishHandler(f1)
 	opts.SetPingTimeout(1 * time.Second)
+	opts.SetOrderMatters(false)
 
 	c := mqtt.NewClient(opts)
-	c.SetOrderMatters(false)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		fmt.Println(token.Error())
 		os.Exit(1)

@@ -15,6 +15,16 @@ type Env1 struct {
 	Lock   sync.Mutex
 }
 
+var (
+	temp string
+	lux string
+)
+
+func SetData(temp_p string, lux_p string) {
+	temp = temp_p
+	lux = lux_p
+}
+
 // Make sure we conform to ServerInterface
 
 var _ ServerInterface = (*Env1)(nil)
