@@ -31,7 +31,7 @@ func main() {
 	swagger.Servers = nil
 
 	// Create an instance of our handler which satisfies the generated interface
-	lesson1 := api.NewEnv1()
+	env1 := api.NewEnv1()
 
 	// This is how you set up a basic chi router
 	r := chi.NewRouter()
@@ -40,8 +40,11 @@ func main() {
 	// OpenAPI schema.
 	r.Use(middleware.OapiRequestValidator(swagger))
 
-	// We now register our lesson1 above as the handler for the interface
-	api.HandlerFromMux(lesson1, r)
+	// We now register our env1 above as the handler for the interface
+	api.HandlerFromMux(env1, r)
+
+	// Kick off the MQTT stuff
+	getClient()
 
 	s := &http.Server{
 		Handler: r,

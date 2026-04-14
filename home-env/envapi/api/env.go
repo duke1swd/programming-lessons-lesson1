@@ -20,6 +20,11 @@ var (
 	lux string
 )
 
+func init() {
+	temp = "no call yet"
+	lux = "no call yet"
+}
+
 func SetData(temp_p string, lux_p string) {
 	temp = temp_p
 	lux = lux_p

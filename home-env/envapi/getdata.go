@@ -16,7 +16,7 @@ import (
 
 var (
 	temp string
-	lux string
+	lux  string
 )
 
 var (
@@ -38,7 +38,7 @@ func init() {
 	epoch, _ = time.Parse("2006-Jan-02 MST", "2018-Nov-01 EDT")
 	tempTopic = "environment/outdoor-temp"
 	luxTopic = "environment/outdoor-lux"
-	mqttAddress = "tcp://127.0.0.1:1883"
+	mqttAddress = "tcp://DanielPi3:1883"
 	mqttClientId = "env-api-server"
 	mqttSubscription = "environment/#"
 }
@@ -54,12 +54,13 @@ var f1 mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 		return
 	}
 
-	switch payload {
+	switch topic {
 	case tempTopic:
 		temp = payload
 	case luxTopic:
 		lux = payload
 	default:
+		//fmt.Println("unknown topic: " + topic)
 	}
 	api.SetData(temp, lux)
 }
